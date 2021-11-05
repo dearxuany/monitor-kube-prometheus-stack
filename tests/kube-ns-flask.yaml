@@ -1,0 +1,161 @@
+# Source: dev/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-webhook
+  labels:
+    app: message-webhook
+    release: message-webhook
+spec:
+  type: ClusterIP
+  ports:
+    - name: message-webhook-port
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: message-webhook
+---
+# Source: dev/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-webhook
+  labels:
+    app: message-webhook
+    release: message-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-webhook
+  template:
+    metadata:
+      labels:
+        app: message-webhook
+    spec:
+      nodeSelector:
+      # k8s node 宕机时 pod 排空策略，默认为 node 失联 60s 后被识别为 notready 或 unreachable，默认 node 被打污点后 300s 开始排空节点 pod。
+      # 此处为缩短服务停机时间、提高可用性、防止多个 pod 同时迁移导致集群雪崩，将单节点 pod 排空时间设置为 120s
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 120
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 120
+      imagePullSecrets:
+      - name: aliyun-docker-registry
+      containers:
+        - name: message-webhook
+          image: registry.cn-shenzhen.aliyuncs.com/dearxuany/message-webhook:build_16
+          imagePullPolicy: Always
+          ports:
+            - name: port
+              containerPort: 8080
+              protocol: TCP
+          command: [sh]
+          args: ["startup.sh"]
+          readinessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 2
+            successThreshold: 2
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: 50m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          env:
+            - name : APOLLO_APP_ID
+              value : ""
+            - name : APOLLO_CLUSTER
+              value : "default"
+            - name : APOLLO_CONFIGSERVICE
+              value : "http://devapollo.dearxuany.com:8080"
+            - name : APOLLO_SERVER_URL
+              value : "http://devapollo.dearxuany.com:8080"
+            - name : APP_LOG_PATH
+              value : "/root/logs"
+            - name : APP_WORKDIR
+              value : "/root"
+            - name : DEPLOY_ENV
+              value : "dev"
+            - name : JAVA_OPTS
+              value : ""
+            - name : OUTPUT_REDIRECT
+              value : "/dev/stdout"
+            - name : Project_Branch
+              value : "master"
+            - name : RANDOM_NO
+              value : "nZnoxZAa"
+            - name : SKYWALKING_AGENT_AUTH_KEY
+              value : ""
+            - name : SKYWALKING_BACKEND_SERVICE
+              value : "10.0.0.57:11800"
+            - name : SKYWALKING_ENABLE_ENV
+              value : "selfbuild"
+            - name : SKYWALKING_SERVICE_NAME
+              value : "dev_message-webhook"
+            - name : TOOLS_PATH
+              value : "/root/tools"
+            - name : USE_APOLLO
+              value : "1"
+          volumeMounts:
+          - mountPath: /root/data/models
+            name: vol3
+          - mountPath: /root/logs
+            name: vol1
+          - mountPath: /root/tools
+            name: vol2
+      volumes:
+      - name: vol1
+        hostPath:
+          path: /share_log_mount/dev/message-webhook
+      - name: vol2
+        hostPath:
+          path: /share_log_mount/tools
+      - name: vol3
+        hostPath:
+          path: /share_log_mount/models/message-webhook
+---
+# Source: dev/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # annotations key 不能为空必须有值
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # coeus-api 使用的 websocket 协议，现阶段已废用
+    # nginx.org/websocket-services: ws-svc
+  name: message-webhook
+  labels:
+    app: message-webhook
+    release: message-webhook
+spec:
+  # 域名添加证书，由于前端测试环境和 internal 服务的根域名不一样，在跳转过程中 ssl 证书不一致会导致 https 认证无法通过，导致域名代理失效
+  # 留空排除 internal 后端域名被添加证书，某些外部服务调用使用 http，若仅开启了 https 而没有做 http 到 https 的跳转会导致 http 请求失败
+  rules:
+  - host: "devinternal.dearxuany.com"
+    http:
+      paths:
+      - backend:
+          serviceName: message-webhook
+          servicePort: 8080
+        path: /message-webhook(/|$)(.*)

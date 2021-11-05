@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: grafana
+  labels:
+    app: grafana
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - "grafana.dearxuany.com"
+    secretName: dearxuany-com
+  rules:
+  - host: "grafana.dearxuany.com"
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: 3000
+        path: /

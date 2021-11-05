@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  #  填写一个唯一名称
+  name: ave-channel-xiaokang
+  #  填写目标命名空间
+  namespace: qas-dearxuany
+spec:
+  endpoints:
+  - interval: 10s
+    #  填写service.yaml中Prometheus Exporter对应的Port的Name字段的值
+    port: http
+    #  填写Prometheus Exporter对应的Path的值
+    path: /actuator/prometheus
+  namespaceSelector:
+    any: true
+    #  Nginx Demo的命名空间
+  selector:
+    matchLabels:
+      #  填写service.yaml的Label字段的值以定位目标service.yaml
+      app: ave-channel-xiaokang

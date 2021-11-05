@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canal-metrics
+  labels:
+    k8s-app: canal-metrics
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: canal-metrics-port-01
+      port: 11112
+      targetPort: 11112
+      protocol: TCP
+    - name: canal-metrics-port-02
+      port: 11122
+      targetPort: 11122
+      protocol: TCP
+

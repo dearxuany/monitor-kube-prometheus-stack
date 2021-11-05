@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata: 
+  name: alicloud-nas-grafana-csi-pvc
+spec:
+  accessModes:
+  - ReadWriteMany 
+  storageClassName: alicloud-nas-grafana
+  resources: 
+    requests:
+      storage: 200Gi

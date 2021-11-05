@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  labels:
+    alertmanager: main
+  name: main
+  namespace: monitoring
+spec:
+  image: quay.io/prometheus/alertmanager:v0.21.0
+  nodeSelector:
+    kubernetes.io/os: linux
+  replicas: 3
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      cpu: 1000m
+      memory: 1000Mi
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: alertmanager-main
+  version: v0.21.0

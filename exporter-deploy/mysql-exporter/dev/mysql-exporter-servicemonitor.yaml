@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mysql-exporter
+  namespace: monitoring
+  labels:
+    k8s-app: mysql-exporter
+spec:
+  endpoints:
+  - interval: 15s
+    port: mysql-exporter
+    #path: /metrics
+    honorLabels: true
+    relabelings:
+    - action: replace
+      separator: ;
+      sourceLabels: [__meta_kubernetes_pod_label_target_instance_id]
+      regex: (.*)
+      targetLabel: instance
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      k8s-app: mysql-exporter

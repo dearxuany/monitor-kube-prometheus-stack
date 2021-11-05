@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-exporter
+  labels:
+    k8s-app: nginx-exporter
+  namespace: monitoring
+spec:
+  ports:
+  - name: nginx-exporter
+    port: 9113
+    targetPort: 9113
+    protocol: TCP
+  selector:
+    k8s-app: nginx-exporter
+  type: ClusterIP
+  clusterIP: None

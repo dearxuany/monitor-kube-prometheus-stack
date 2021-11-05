@@ -1,0 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: alicloud-nas-pmm
+mountOptions:
+- nolock,tcp,noresvport
+- vers=3
+parameters:
+  volumeAs: subpath
+  server: "nasmountid.cn-shenzhen.nas.aliyuncs.com:/pmm/"
+provisioner: nasplugin.csi.alibabacloud.com
+reclaimPolicy: Retain

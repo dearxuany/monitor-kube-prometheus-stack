@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: canal-metrics
+  labels:
+    k8s-app: canal-metrics
+subsets:
+- addresses:
+  - ip: 172.18.21.252
+  ports:
+  - name: canal-metrics-port
+    port: 11112
+    protocol: TCP

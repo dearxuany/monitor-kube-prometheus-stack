@@ -1,0 +1,52 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    prometheus: k8s
+  name: k8s
+  namespace: monitoring
+spec:
+  alerting:
+    alertmanagers:
+    - name: alertmanager-main
+      namespace: monitoring
+      port: web
+  image: quay.io/prometheus/prometheus:v2.20.0
+  nodeSelector:
+    kubernetes.io/os: linux
+    node.tag/usage: ops
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  replicas: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 400Mi
+    limits:
+      cpu: 4000m
+      memory: 8192Mi
+  ruleSelector:
+    matchLabels:
+      prometheus: k8s
+      role: alert-rules
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  #additionalScrapeConfigs:
+  #  name: prometheus-additional-scrape-configs
+  #  key: prometheus-additional.yaml
+  version: v2.20.0
+  retention: 30d
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "alicloud-nas-prometheus"
+        resources:
+          requests:
+            storage: 1000G
+     

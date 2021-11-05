@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "3"
+    field.cattle.io/publicEndpoints: '[{"nodeName":"c-xvbfd:m-3c717580238d","addresses":["10.0.0.77"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-kgm6l","allNodes":false},{"nodeName":"c-xvbfd:m-3c717580238d","addresses":["10.0.0.77"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-kgm6l","allNodes":false},{"nodeName":"c-xvbfd:m-3c717580238d","addresses":["10.0.0.77"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-kgm6l","allNodes":false},{"nodeName":"c-xvbfd:m-36bc15cda260","addresses":["10.0.0.99"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mr5c8","allNodes":false},{"nodeName":"c-xvbfd:m-36bc15cda260","addresses":["10.0.0.99"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mr5c8","allNodes":false},{"nodeName":"c-xvbfd:m-36bc15cda260","addresses":["10.0.0.99"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mr5c8","allNodes":false},{"nodeName":"c-xvbfd:m-3a6030def2c2","addresses":["10.0.0.87"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-45zqg","allNodes":false},{"nodeName":"c-xvbfd:m-3a6030def2c2","addresses":["10.0.0.87"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-45zqg","allNodes":false},{"nodeName":"c-xvbfd:m-3a6030def2c2","addresses":["10.0.0.87"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-45zqg","allNodes":false},{"nodeName":"c-xvbfd:m-06286895d2d6","addresses":["10.0.0.93"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-cn7sj","allNodes":false},{"nodeName":"c-xvbfd:m-06286895d2d6","addresses":["10.0.0.93"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-cn7sj","allNodes":false},{"nodeName":"c-xvbfd:m-06286895d2d6","addresses":["10.0.0.93"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-cn7sj","allNodes":false},{"nodeName":"c-xvbfd:m-54a07eb5b04a","addresses":["10.0.0.88"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-q7bkq","allNodes":false},{"nodeName":"c-xvbfd:m-54a07eb5b04a","addresses":["10.0.0.88"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-q7bkq","allNodes":false},{"nodeName":"c-xvbfd:m-54a07eb5b04a","addresses":["10.0.0.88"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-q7bkq","allNodes":false},{"nodeName":"c-xvbfd:m-668e6674cff3","addresses":["10.0.0.100"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-hxbgk","allNodes":false},{"nodeName":"c-xvbfd:m-668e6674cff3","addresses":["10.0.0.100"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-hxbgk","allNodes":false},{"nodeName":"c-xvbfd:m-668e6674cff3","addresses":["10.0.0.100"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-hxbgk","allNodes":false},{"nodeName":"c-xvbfd:m-0185977542a6","addresses":["10.0.0.101"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-qmnsj","allNodes":false},{"nodeName":"c-xvbfd:m-0185977542a6","addresses":["10.0.0.101"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-qmnsj","allNodes":false},{"nodeName":"c-xvbfd:m-0185977542a6","addresses":["10.0.0.101"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-qmnsj","allNodes":false},{"nodeName":"c-xvbfd:m-5e7750ea22f3","addresses":["10.0.0.90"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mz76h","allNodes":false},{"nodeName":"c-xvbfd:m-5e7750ea22f3","addresses":["10.0.0.90"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mz76h","allNodes":false},{"nodeName":"c-xvbfd:m-5e7750ea22f3","addresses":["10.0.0.90"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-mz76h","allNodes":false},{"nodeName":"c-xvbfd:m-00ec5f0552d6","addresses":["10.0.0.91"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-c5xb9","allNodes":false},{"nodeName":"c-xvbfd:m-00ec5f0552d6","addresses":["10.0.0.91"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-c5xb9","allNodes":false},{"nodeName":"c-xvbfd:m-00ec5f0552d6","addresses":["10.0.0.91"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-c5xb9","allNodes":false},{"nodeName":"c-xvbfd:m-ed2a21912ea4","addresses":["10.0.0.95"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-drc2w","allNodes":false},{"nodeName":"c-xvbfd:m-ed2a21912ea4","addresses":["10.0.0.95"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-drc2w","allNodes":false},{"nodeName":"c-xvbfd:m-ed2a21912ea4","addresses":["10.0.0.95"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-drc2w","allNodes":false},{"nodeName":"c-xvbfd:m-9c310bd56ed5","addresses":["10.0.0.89"],"port":80,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-l4hqm","allNodes":false},{"nodeName":"c-xvbfd:m-9c310bd56ed5","addresses":["10.0.0.89"],"port":443,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-l4hqm","allNodes":false},{"nodeName":"c-xvbfd:m-9c310bd56ed5","addresses":["10.0.0.89"],"port":10254,"protocol":"TCP","podName":"nginx-ingress-controller-metrics:nginx-ingress-controller-l4hqm","allNodes":false}]'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{},"name":"nginx-ingress-controller","namespace":"ingress-nginx"},"spec":{"selector":{"matchLabels":{"app":"ingress-nginx"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"10254","prometheus.io/scrape":"true"},"labels":{"app":"ingress-nginx"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"beta.kubernetes.io/os","operator":"NotIn","values":["windows"]},{"key":"node-role.kubernetes.io/worker","operator":"Exists"}]}]}}},"containers":[{"args":["/nginx-ingress-controller","--configmap=$(POD_NAMESPACE)/nginx-configuration","--election-id=ingress-controller-leader","--ingress-class=nginx","--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services","--udp-services-configmap=$(POD_NAMESPACE)/udp-services","--annotations-prefix=nginx.ingress.kubernetes.io"],"env":[{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}}],"image":"rancher/nginx-ingress-controller:nginx-0.35.0-rancher2","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"nginx-ingress-controller","ports":[{"containerPort":80,"name":"http"},{"containerPort":443,"name":"https"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"securityContext":{"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["ALL"]},"runAsUser":101}}],"hostNetwork":true,"serviceAccountName":"nginx-ingress-serviceaccount","terminationGracePeriodSeconds":60,"tolerations":[{"effect":"NoExecute","operator":"Exists"},{"effect":"NoSchedule","operator":"Exists"}]}},"updateStrategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"}}}
+  creationTimestamp: "2021-07-12T13:11:57Z"
+  generation: 3
+  name: nginx-ingress-controller
+  namespace: nginx-ingress-controller-metrics
+  resourceVersion: "38949064"
+  selfLink: /apis/apps/v1/namespaces/nginx-ingress-controller-metrics/daemonsets/nginx-ingress-controller
+  uid: d276d9f8-683c-4f75-9855-81b2018e38d0
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nginx-ingress-controller-metrics
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2021-07-13T10:28:17Z"
+        field.cattle.io/ports: '[[{"containerPort":80,"dnsName":"nginx-ingress-controller-hostport","hostPort":80,"kind":"HostPort","name":"http","protocol":"TCP","sourcePort":80},{"containerPort":443,"dnsName":"nginx-ingress-controller-hostport","hostPort":443,"kind":"HostPort","name":"https","protocol":"TCP","sourcePort":443}]]'
+        field.cattle.io/publicEndpoints: '[{"addresses":["10.0.0.90"],"nodeId":"c-xvbfd:m-5e7750ea22f3","port":80,"protocol":"TCP"},{"addresses":["10.0.0.90"],"nodeId":"c-xvbfd:m-5e7750ea22f3","port":443,"protocol":"TCP"},{"addresses":["10.0.0.77"],"nodeId":"c-xvbfd:m-3c717580238d","port":80,"protocol":"TCP"},{"addresses":["10.0.0.77"],"nodeId":"c-xvbfd:m-3c717580238d","port":443,"protocol":"TCP"},{"addresses":["10.0.0.95"],"nodeId":"c-xvbfd:m-ed2a21912ea4","port":80,"protocol":"TCP"},{"addresses":["10.0.0.95"],"nodeId":"c-xvbfd:m-ed2a21912ea4","port":443,"protocol":"TCP"},{"addresses":["10.0.0.100"],"nodeId":"c-xvbfd:m-668e6674cff3","port":80,"protocol":"TCP"},{"addresses":["10.0.0.100"],"nodeId":"c-xvbfd:m-668e6674cff3","port":443,"protocol":"TCP"},{"addresses":["10.0.0.89"],"nodeId":"c-xvbfd:m-9c310bd56ed5","port":80,"protocol":"TCP"},{"addresses":["10.0.0.89"],"nodeId":"c-xvbfd:m-9c310bd56ed5","port":443,"protocol":"TCP"},{"addresses":["10.0.0.96"],"nodeId":"c-xvbfd:m-1d90056d9be9","port":80,"protocol":"TCP"},{"addresses":["10.0.0.96"],"nodeId":"c-xvbfd:m-1d90056d9be9","port":443,"protocol":"TCP"},{"addresses":["10.0.0.99"],"nodeId":"c-xvbfd:m-36bc15cda260","port":80,"protocol":"TCP"},{"addresses":["10.0.0.99"],"nodeId":"c-xvbfd:m-36bc15cda260","port":443,"protocol":"TCP"},{"addresses":["10.0.0.88"],"nodeId":"c-xvbfd:m-54a07eb5b04a","port":80,"protocol":"TCP"},{"addresses":["10.0.0.88"],"nodeId":"c-xvbfd:m-54a07eb5b04a","port":443,"protocol":"TCP"},{"addresses":["10.0.0.87"],"nodeId":"c-xvbfd:m-3a6030def2c2","port":80,"protocol":"TCP"},{"addresses":["10.0.0.87"],"nodeId":"c-xvbfd:m-3a6030def2c2","port":443,"protocol":"TCP"},{"addresses":["10.0.0.91"],"nodeId":"c-xvbfd:m-00ec5f0552d6","port":80,"protocol":"TCP"},{"addresses":["10.0.0.91"],"nodeId":"c-xvbfd:m-00ec5f0552d6","port":443,"protocol":"TCP"}]'
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        app: nginx-ingress-controller-metrics
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/os
+                operator: NotIn
+                values:
+                - windows
+              - key: node-role.kubernetes.io/worker
+                operator: Exists
+      containers:
+      - args:
+        - /nginx-ingress-controller
+        - --configmap=$(POD_NAMESPACE)/nginx-configuration
+        - --election-id=ingress-controller-leader
+        - --ingress-class=nginx
+        - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+        - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+        - --annotations-prefix=nginx.ingress.kubernetes.io
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: rancher/nginx-ingress-controller:nginx-0.35.0-rancher2
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: nginx-ingress-controller
+        ports:
+        - containerPort: 80
+          hostPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          hostPort: 443
+          name: https
+          protocol: TCP
+        - containerPort: 10254
+          hostPort: 10254
+          name: prometheus
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_BIND_SERVICE
+            drop:
+            - ALL
+          runAsUser: 101
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: nginx-ingress-serviceaccount
+      serviceAccountName: nginx-ingress-serviceaccount
+      terminationGracePeriodSeconds: 60
+      tolerations:
+      - effect: NoExecute
+        operator: Exists
+      - effect: NoSchedule
+        operator: Exists
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 11
+  desiredNumberScheduled: 11
+  numberAvailable: 11
+  numberMisscheduled: 0
+  numberReady: 11
+  observedGeneration: 3
+  updatedNumberScheduled: 11

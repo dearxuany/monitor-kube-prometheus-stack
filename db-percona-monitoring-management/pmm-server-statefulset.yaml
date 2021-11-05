@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: pmm-server
+  name: pmm-server
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pmm-server
+  serviceName: pmm-server
+  template:
+    metadata:
+      labels:
+        app: pmm-server
+    spec:
+      containers:
+      - env: []
+        image: percona/pmm-server:2
+        name: pmm-server
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http
+        #- containerPort: 443
+        #  name: https
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 180
+          periodSeconds: 2
+          successThreshold: 2
+          tcpSocket:
+            port: 80
+          timeoutSeconds: 2
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 180
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 80
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4096Mi
+          requests:
+            cpu: 100m
+            memory: 2048Mi
+        volumeMounts:
+        - mountPath: /srv
+          name: pmm-storage
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        node.tag/usage: ops
+  volumeClaimTemplates:
+  - metadata:
+      creationTimestamp: null
+      name: pmm-storage
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 200G
+      storageClassName: alicloud-nas-pmm
+      volumeMode: Filesystem
