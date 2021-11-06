@@ -32,7 +32,8 @@ kube-prometheus-release-0.6 项目 github 原地址 https://github.com/prometheu
 │    ├── nginx-exporter
 │    ├── nginx-ingress-controller-metrics
 │    ├── node-exporter
-│    └── springboot-actuator                
+│    └── springboot-actuator
+├── grafana-dashboard-model                    # grafana dashboard 模板，兼容多数据源、多实例                   
 ├── kube-aliyun-nas-mount                      # 阿里云 nas storageClass、PVC 新建 
 │    ├── alibaba-cloud-csi-driver-master       # k8s 支持阿里云 nas 的 CSI 插件
 │    ├── dev
