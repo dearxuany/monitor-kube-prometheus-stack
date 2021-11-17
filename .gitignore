@@ -130,3 +130,5 @@ dmypy.json
 
 # pycharm
 .idea/
+
+kube-prometheus-release-0.6/manifests/alertmanager-secret.yaml
